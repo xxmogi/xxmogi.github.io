@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+{% include head.html %}
+
+<body>
+
+  {% include header.html %}
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        {{ content }}
+      </div>
+      <aside class="col-md-4">
+        <section class="panel panel-default">
+          <div class="panel-heading">Social Accounts.</div>
+          <div class="panel-body">
+          <ul>
+            {% if site.github_username %}
+            <li>
+              <span class="fui-github"></span>
+              <a href="https://github.com/{{ site.github_username }}">
+                <span class="username">{{ site.github_username }} </span>
+              </a>on GitHub
+            </li>
+            {% endif %} {% if site.twitter_username %}
+            <li>
+              <span class="fui-twitter"></span>
+              <a href="https://twitter.com/{{ site.twitter_username }}"> 
+                <span class="username">@{{ site.twitter_username }}</span>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+            </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+
+  {% include footer.html %}
+
+</body>
+
+</html>

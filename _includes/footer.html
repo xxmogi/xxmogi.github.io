@@ -1,0 +1,20 @@
+<footer>
+  <div class="container-fluid">
+    <div class="center-block">
+    <span class="muted"> Copyright &copy; 2014- Takashi Mogi All Rights Reserved 
+      - powered by <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://designmodo.github.io/Flat-UI/">Flat UI</a>. </span>
+      </div>
+  </div>
+</footer>
+<script src="{{ "/assets/jquery.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/assets/respond.min.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/assets/video.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/assets/flat-ui/js/flat-ui.js" | prepend: site.baseurl }}"></script>
+<script src="{{ "/assets/highlight/highlight.pack.js" | prepend: site.baseurl }}"></script>
+<script>
+  $(document).ready(function() {
+    $('pre').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>

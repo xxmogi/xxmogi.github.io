@@ -1,0 +1,24 @@
+# Site settings
+title: The Wasted Laboratory
+description: > # this means to ignore newlines until "baseurl:"
+  趣味の開発でやったこと等々を色々と書いていきます。
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://xxmogi.github.io" # the base hostname & protocol for your site
+twitter_username: xxmogi
+github_username:  xxmogi
+paginate: 2
+paginate_path: "/blog/page:num"
+# Build settings
+markdown: redcarpet
+highlighter: none
+
+
+safe: true
+lsi: false
+exclude: ['vendor', 'Gemfile', 'Gemfile.lock', '.ruby-version', '.gitignore', '.bundle', '.git', 'LICENSE', 'Flat-UI-master']
+
+gems:
+    - jekyll-mentions
+#    - jemoji
+    - jekyll-redirect-from
+    - jekyll-sitemap
