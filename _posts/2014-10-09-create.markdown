@@ -13,7 +13,7 @@ github pagesで[Jekyll](http://jekyllrb.com/)使えるらしい、とのこと�
 その結果、最近流行りの[AngularJS](https://angularjs.org/)使って
 SPA(Single Page Application)チックな作りにしました。
 
-# SPAにするために
+## SPAにするために
 Jekyllではstaticなページが出来上がるので、angularからAjaxで
 HTMLを読み込み、DOMに埋め込みます。
 
@@ -29,7 +29,7 @@ Jekyllのポストを表示するAngularテンプレートを以下のように�
 コントローラー側では、ここで指定した`contentHtml`にajaxで読んできた
 htmlを入れてあげます
 
-{% highlight javascript %}
+```javascript
 app.contoller("PostController",['$scope','$http',
   function PostController($scope, $http){
   $http.get('/path/to/post')
@@ -37,7 +37,7 @@ app.contoller("PostController",['$scope','$http',
       $scope.contentHtml = data;
     });
   }]);
-{% endhighlight %}
+```
 
 これでJekyllで読み込んできたHTMLをページに表示できます。あとは`/path/to/post`の部分を
 `$routeParams`とかを使って指定して上げるだけでOK。ホントはPathをきちんと

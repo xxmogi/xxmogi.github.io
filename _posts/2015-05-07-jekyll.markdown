@@ -2,4 +2,45 @@
 layout: post
 title: "Jekyllのカスタマイズ色々"
 date: "2015-05-07"
+tags: gh-pages
 ---
+
+随分前に作って、なんか気に入らなくて全然更新してなかった。[Octpress](http://octopress.org)に変えたりしてみたけど、結局しっくり来なくてJekyllに舞い戻る。
+
+## カスタムテーマ
+人と同じが嫌な人間なので、ほぼ一から作ってます。何も難しいことはしてなくて、ゴリゴリ書いていっただけ。
+
+## Fenced Code Block
+前にJekyllやった時は、Code書くときだけLiquid Template形式で書かなきゃなかった。下みたいにFenced Code Blockで書けるようにしたかった。
+
+<pre>
+ ```java
+ public class Main{
+   public static void main(String[] args) {
+     System.out.println("hello");
+   }
+ }
+```
+</pre>
+
+調べ直してみたらredcarpetを使えばFenced Code Blockの記述が使えるらしいということがわかったので、
+`_config.yml`に記載されている`markdown: kramdown`を `markdown: redcarpet`に変更。これだけで行けたのか…
+
+## DISQUS
+GitHub PagesだとStaticなページになってしまうため、そのままだとコメント欄みたいなものが付けられない。
+他のページ見てみると[Disqus](https://disqus.com)というコメントフォームのサービスが結構使われていたのでこれを導入。
+
+ただ、そのまま入れてしまうと全部のポストに同じコメントが表示されてしまうので、
+Disqusのページからコピーしてきたコードに`disqus_identifier`変数を追加して、そこにポストの識別子を入れてやる。
+ページの識別子にはポストのタイトルを使ってやる。
+
+```javascript 
+/* * * CONFIGURATION VARIABLES * * */
+var disqus_shortname = 'wasted-laboratory';
+var disqus_identifier = '{{ page.title }}'; // この行を追加
+/* * * DON'T EDIT BELOW THIS LINE * * */
+以下略
+```
+
+## 404 Not Found
+どうやら404ページもカスタムできる模様。これは、やろうとしてることがあるので今度書きます。

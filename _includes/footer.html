@@ -1,19 +1,56 @@
 <footer>
-  <div class="container-fluid">
-    <div class="center-block">
-    <span class="muted"> Copyright &copy; 2014- Takashi Mogi All Rights Reserved 
-      - powered by <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://designmodo.github.io/Flat-UI/">Flat UI</a>. </span>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="footer-title">About</div>
+        <p>
+          　趣味でやったあんな事やこんなことについて、興味と関心の赴くままに書いてゆく。
+          実際に役に立つかは関係ない。面白ければそれで良い。
+        </p>
       </div>
+      <div class="col-md-5">
+        <div class="footer-title">Social Accounts.</div>
+        <ul>
+          {% if site.github_username %}
+          <li>
+            <span class="fui-github"></span>
+            <a href="https://github.com/{{ site.github_username }}">
+              <span class="username">{{ site.github_username }} </span>
+            </a>
+          </li>
+          {% endif %} {% if site.twitter_username %}
+          <li>
+            <span class="fui-twitter"></span>
+            <a href="https://twitter.com/{{ site.twitter_username }}">
+              <span class="username">@{{ site.twitter_username }}</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+
+    </div>
+    <!-- end row -->
   </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="center-block">
+        <span class="muted"> Copyright &copy; 2014- Takashi Mogi All Rights Reserved 
+      - powered by <a href="http://jekyllrb.com">Jekyll</a> and <a href="http://designmodo.github.io/Flat-UI/">Flat UI</a>.    
+        </span>
+      </div>
+    </div>
 </footer>
-<script src="{{ "/assets/jquery.min.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/assets/respond.min.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/assets/video.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/assets/flat-ui/js/flat-ui.js" | prepend: site.baseurl }}"></script>
-<script src="{{ "/assets/highlight/highlight.pack.js" | prepend: site.baseurl }}"></script>
+<script src="{{ " /assets/jquery.min.js " | prepend: site.baseurl }}"></script>
+<script src="{{ " /assets/respond.min.js " | prepend: site.baseurl }}"></script>
+<script src="{{ " /assets/video.js " | prepend: site.baseurl }}"></script>
+<script src="{{ " /assets/flat-ui/js/flat-ui.js " | prepend: site.baseurl }}"></script>
+<script src="{{ " /assets/highlight/highlight.pack.js " | prepend: site.baseurl }}"></script>
 <script>
-  $(document).ready(function() {
-    $('pre').each(function(i, block) {
+  $(document).ready(function () {
+    $('pre').each(function (i, block) {
       hljs.highlightBlock(block);
     });
   });
