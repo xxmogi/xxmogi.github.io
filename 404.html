@@ -1,0 +1,23 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html>
+{% include head.html %}
+  <style>
+    html,body {
+      margin:0px;
+      padding:0px;
+    }
+  </style>
+<body>
+  <div class="container">
+    {% include header.html %}
+  </div>
+  <script src="{{ "/assets/jquery.min.js" | prepend: site.baseurl }}"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.4/p5.min.js"></script>
+  <script src="js/404/circle.js">
+  </script>
+</body>
+
+</html>
