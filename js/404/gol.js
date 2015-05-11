@@ -2,7 +2,7 @@
   'use strict';
   var sketch = function (p) {
     var cellArray;
-    var cellSize = 10;
+    var cellSize = 20;
     var numx, numy;
 
     function restart() {
@@ -50,38 +50,53 @@
       }
     }
     p.setup = function () {
-
       p.createCanvas(window.innerWidth, window.innerHeight);
       numx = Math.floor(p.width / cellSize);
       numy = Math.floor(p.height / cellSize);
-      console.log(numx);
       restart();
       p.noStroke();
       p.frameRate(10);
-    }
+    };
 
     p.draw = function () {
       // background(200);
-      for (var x = 0; x < numx; x++) {
-        for (var y = 0; y < numy; y++) {
+        var x, y, text, offset;
+      for (x = 0; x < numx; x++) {
+        for (y = 0; y < numy; y++) {
           cellArray[x][y].calcNextState();
         }
       }
 
-      p.translate(_cellSize / 2, cellSize / 2);
+      p.translate(cellSize / 2, cellSize / 2);
 
-      for (var x = 0; x < numx; x++) {
-        for (var y = 0; y < numy; y++) {
+      for (x = 0; x < numx; x++) {
+        for (y = 0; y < numy; y++) {
           cellArray[x][y].drawMe();
         }
       }
-
-    }
+        
+      p.fill(255);
+      p.textSize(70);
+      text = "404";
+      offset = p.textWidth(text);
+      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0);
+      text = "Not Found";
+      offset = p.textWidth(text);
+      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0 + 70);
+    };
 
     p.mousePressed = function () {
       restart();
-    }
-
+    };
+    
+    p.windowResized = function () {
+      p.resizeCanvas(window.innerWidth, window.innerHeight);
+      numx = Math.floor(p.width / cellSize);
+      numy = Math.floor(p.height / cellSize);
+      restart();
+    };
+    
+    //セル定義
     var Cell = function (ex, why) {
       this.vector;
       this.state;
@@ -94,13 +109,13 @@
 
       this.nextState = p.random(2) > 1 ? true : false;
       this.state = this.nextState;
-      this.neighbors = new Cell();
+      
       this.count = 0;
       this.col = p.color(p.random(255), p.random(255), p.random(255));
     }
 
     Cell.prototype.addNeighbour = function (cell) {
-      this.neighbors = append(neighbors, cell);
+      this.neighbors.push(cell);
     }
 
     Cell.prototype.calcNextState = function () {
@@ -133,10 +148,10 @@
     Cell.prototype.drawMe = function () {
       this.state = this.nextState;
 
-      var size = count / 20.0;
+      var size = this.count / 10.0;
       if (this.state) {
         p.fill(this.col);
-        p.ellipse(x, y, 100 * size, 100 * size);
+        p.ellipse(this.vector.x, this.vector.y, 100 * size, 100 * size);
         this.count++;
       } else {
         this.count = 0;
