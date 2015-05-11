@@ -39,6 +39,7 @@
     };
 
     p.draw = function () {
+      var text, offset;
       p.background(0);
       cs.forEach(function (c, i) {
         p.fill(p.random(20, 150) + 100, 140 + p.random(0, 100), 140 + p.random(50, 100));
@@ -49,6 +50,14 @@
       cs = cs.filter(function (c) {
         return !c.isDead();
       });
+      p.fill(255);
+      p.textSize(40);
+      text = "404";
+      offset = p.textWidth(text);
+      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0);
+      text = "Not Found";
+      offset = p.textWidth(text);
+      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0 + 40);
     };
 
     p.mouseMoved = function () {
@@ -63,6 +72,6 @@
       p.resizeCanvas(window.innerWidth, window.innerHeight);
     };
   }
-  
+
   new p5(sketch);
 }(p5));
