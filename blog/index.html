@@ -14,13 +14,11 @@ layout: default
       <hr>
       <div>
           {{ post.excerpt }}
-      </div>
-      <div class="pull-right">
         <a href="{{ post.url | prepend: site.baseurl }}">
-          more<span class="fui-arrow-right"></span>
+          ...more<span class="fui-arrow-right"></span>
         </a>
       </div>
-        <div class="clearfix"></div>                                
+                               
     </article>
     {% endfor %}
 

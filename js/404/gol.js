@@ -76,7 +76,7 @@
       }
         
       p.fill(255);
-      p.textSize(70);
+      p.textSize(60);
       text = "404";
       offset = p.textWidth(text);
       p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0);

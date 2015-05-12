@@ -1,0 +1,87 @@
+---
+layout: post
+title: "404 Not Found Pages"
+date: "2015-05-12"
+tags: gh-pages, p5js
+---
+
+時々、面白い404ページを見るので自分もやってみたいなと思った。そして、せっかくなので最近はまっている
+[p5.js](http://p5js.org)の作品集みたいな感じで、色々なプログラムが表示されるようにしてみた。
+
+
+##GitHub Pagesでの404
+[ここ](https://help.github.com/articles/custom-404-pages/)にあるように、404.htmlまたは
+404.mdを作成しておくと、ページが見つからない時に勝手に表示してくれる。
+
+## p5.js
+p5.jsは[Processing](https://processing.org)から派生したJavascriptライブラリで、ビジュアルプログラム
+を簡単に作成することができる。元々[Processing.js](http://processingjs.org)を使って書いていたが、オーディオ
+周りのライブラリがあるということでp5.jsに移ってみた。
+
+Processingのコードをブラウザ上で実行するProcessing.jsと違い、p5.jsはProcessingをJavascriptで書き直した
+もの。コードは全てJavascriptで書くが、元はProcessingなので、大体の書き方は同じ。
+
+## p5.jsの書き方
+
+基本的には以下のように書けば勝手に動く。
+
+```html 
+<script src="/path/to/p5.js"></script>
+<script>
+  function setup() {
+    createCanvas(window.innerWidth, window.innerHeight); //画面フルサイズ
+    // 初期化のコード
+  }
+
+  function draw () {
+    drawSomething();
+    // 表示内容のコード
+  }
+</script>
+
+```
+
+ただ、`setup()`や`draw()`がGlobalになるのが気持ち悪いので、[p5.jsのwiki](https://github.com/processing/p5.js/wiki/Instantiation-Cases)に書いてあるInstance Modeを使うことにした。これは単純にこだわりの問題。
+
+```javascript
+(function () {
+  'use strict';
+  var sketch = function (p) { 
+    p.setup = function () {
+      p.createCanvas(window.innerWidth, window.innerHeight);
+    };
+
+    p.draw = function () {
+      p.background(0);
+      p.ellipse(p.width/2, p.height/2, 200, 200);
+    };
+  };
+  new p5(sketch);
+}());
+```
+
+p5.jsの関数名にいちいち`p.`と入れないといけないのが少し面倒だが、こっちの方が落ち着く。（個人的に）
+後はこのファイルを読み込めば自動でCanvasが作られ、勝手に実行される。
+
+## ランダム読み込み
+何も難しいことはやっていない。Arrayに作った.jsファイル名を羅列し、乱数使ってランダムに読み込むようにしてるだけ。
+
+```js
+(function () {
+  'use strict';
+  var content, scripts,index;
+  scripts = [ "gol.js", "circle.js" ];
+  
+  index = Math.floor(Math.random() * scripts.length);
+
+  content = document.createElement('script');
+  content.type = 'text/javascript';
+  content.async = true;
+  content.src = '/js/404/' + scripts[index];
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(content);
+}());
+```
+
+今はまだ二つしかないけど、いくつかアイディアがあるので少しづつ増やしていこうかなと。
+
+404ページは[こちら](/404.html)からアクセス！！

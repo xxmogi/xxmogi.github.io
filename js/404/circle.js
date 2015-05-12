@@ -2,75 +2,98 @@
   'use strict';
   var sketch = function (p) {
 
-    var cs = [],
+    var system,
       mouseCount = 0,
-      Circle;
+      Circle,
+      CircleSystem;
 
     Circle = function (pos) {
       var vx, vy;
       this.pos = pos.copy();
-      vx = p.randomGaussian(50, 15) - 50;
-      vy = p.randomGaussian(10, 15) - 20;
-      this.vel = p.createVector(vx, -Math.abs(vy));
-    };
-
-    Circle.prototype.isDead = function () {
-      if (this.pos.x > 0 && this.pos.x < p.width && this.pos.y < p.height) {
-        return false;
-      } else {
-        return true;
-      }
+      vx = p.random() * 5.0 - 2.5;
+      vy = p.random() * 5.0 - 2.5;
+      this.vel = p.createVector(vx, vy);
+      this.r = 200;
     };
 
     Circle.prototype.update = function () {
       this.pos.x += this.vel.x;
       this.pos.y += this.vel.y;
-      this.vel.y += 9.8 / 3.0;
+      
+      this.pos.x = this.pos.x % p.width;
+      if (this.pos.x < 0) {
+        this.pos.x = p.width - this.pos.x;
+      }
+      this.pos.y = this.pos.y % p.height;
+      if (this.pos.y < 0) {
+        this.pos.y = p.height - this.pos.y;
+      }
     };
 
-    Circle.prototype.draw = function () {
-      p.ellipse(this.pos.x, this.pos.y, 20, 20);
+    Circle.prototype.getPosition = function () {
+      return this.pos;
     };
 
+    CircleSystem = function () {
+      var circle, i, vec;
+      this.circles = [];
+      for (i = 0; i < 30; i++) {
+        vec = p.createVector(p.random() * p.width, p.random() * p.height);
+        this.circles.push(new Circle(vec));
+      }
+    };
+
+    CircleSystem.prototype.update = function () {
+      var circle, i, j;
+      for (i = 0; i < this.circles.length; i++) {
+        circle = this.circles[i];
+        circle.update();
+      }
+    };
+
+    CircleSystem.prototype.draw = function () {
+      var circle, pos, i;
+      for (i = 0; i < this.circles.length; i++) {
+        circle = this.circles[i];
+        p.fill(255, 255, 255, 100);
+        p.stroke(255);
+        p.strokeWeight(5);
+        p.ellipse(circle.pos.x, circle.pos.y, circle.r, circle.r);
+      }
+    };
 
     p.setup = function () {
       p.createCanvas(window.innerWidth, window.innerHeight);
-      p.noStroke();
+      p.stroke(255);
+      p.background(0);
+      system = new CircleSystem();
     };
 
     p.draw = function () {
-      var text, offset;
       p.background(0);
-      cs.forEach(function (c, i) {
-        p.fill(p.random(20, 150) + 100, 140 + p.random(0, 100), 140 + p.random(50, 100));
-        c.draw();
-        c.update();
-      });
+      system.update();
+      system.draw();
+      drawString();
 
-      cs = cs.filter(function (c) {
-        return !c.isDead();
-      });
-      p.fill(255);
-      p.textSize(40);
+    };
+
+
+    p.windowResized = function () {
+      p.resizeCanvas(window.innerWidth, window.innerHeight);
+    };
+
+    function drawString() {
+      var text, offset;
+      p.fill(0);
+      p.noStroke();
+      p.textSize(60);
       text = "404";
       offset = p.textWidth(text);
       p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0);
       text = "Not Found";
       offset = p.textWidth(text);
-      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0 + 40);
-    };
-
-    p.mouseMoved = function () {
-      mouseCount++;
-      if (mouseCount > 10) {
-        cs.push(new Circle(p.createVector(p.mouseX, p.mouseY)));
-        mouseCount = 0;
-      }
-    };
-
-    p.windowResized = function () {
-      p.resizeCanvas(window.innerWidth, window.innerHeight);
-    };
+      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0 + 60);
+    }
   }
 
   new p5(sketch);

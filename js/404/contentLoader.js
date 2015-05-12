@@ -8,6 +8,6 @@
   content = document.createElement('script');
   content.type = 'text/javascript';
   content.async = true;
-  content.src = 'js/404/' + scripts[index];
+  content.src = '/js/404/' + scripts[index];
   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(content);
 }());
