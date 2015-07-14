@@ -13,13 +13,14 @@ rel="nofollow" target="_blank">
 </html>
 
 ちなみに英語の本だけど、コードが多いので結構サクサク読める。
-内容も初期設定から、OpenGLのShaderを使った2D/3D、OSCを使ったネットワーキング、
-Raspbery Piまで、かなり充実してるのでオススメ。
+内容も初期設定から、OpenGLのShaderを使った2D/3D、
+OSCを使ったネットワーキング、
+Raspbery Piなど、かなり充実してるのでオススメ。
 
-
-それで、これまでやってこなかったOpenGLとかShaderとかやってみようと
+## いろいろサンプルを見てみる
+ある程度読んでから、OpenGLとかShaderとかもう少しやってみようと
 思って、`openFrameworks/tutorials/shader`にあるサンプルを
-実行しようとしたが、`main.cpp`の下の位置でエラーが出る。
+実行しようとした。しかし`main.cpp`の下の位置でエラーが出る。
 
 ```cpp
 #ifdef USE_PROGRAMMABLE_RENDERER
