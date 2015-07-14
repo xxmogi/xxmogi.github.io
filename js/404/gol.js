@@ -82,7 +82,7 @@
       p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0);
       text = "Not Found";
       offset = p.textWidth(text);
-      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0 + 70);
+      p.text(text, p.width / 2.0 - offset / 2.0, p.height / 2.0 + 60);
     };
 
     p.mousePressed = function () {

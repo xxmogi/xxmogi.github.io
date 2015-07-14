@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   var content, scripts,index;
-  scripts = [ "gol.js", "circle.js" ];
+  scripts = [ "gol.js", "circle.js", "humnoise.js" ];
   
   index = Math.floor(Math.random() * scripts.length);
 
