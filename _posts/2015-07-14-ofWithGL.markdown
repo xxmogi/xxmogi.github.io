@@ -2,7 +2,7 @@
 layout: post
 title: "openFrameworksでShaderプログラミング"
 date: 2015-07-14
-tags: openFrameworks
+tags: openFrameworks GLSL
 ---
 
 最近この本を買ったおかげで、久々に[openFrameworks](http://openframeworks.cc)にはまっております。

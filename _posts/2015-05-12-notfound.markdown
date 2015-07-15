@@ -2,7 +2,7 @@
 layout: post
 title: "404 Not Found Pages"
 date: "2015-05-12"
-tags: gh-pages, p5js
+tags: gh-pages p5js
 ---
 
 時々、面白い404ページを見るので自分もやってみたいなと思った。そして、せっかくなので最近はまっている
@@ -25,7 +25,7 @@ Processingのコードをブラウザ上で実行するProcessing.jsと違い、
 
 基本的には以下のように書けば勝手に動く。
 
-```html 
+```html
 <script src="/path/to/p5.js"></script>
 <script>
   function setup() {
@@ -46,7 +46,7 @@ Processingのコードをブラウザ上で実行するProcessing.jsと違い、
 ```javascript
 (function () {
   'use strict';
-  var sketch = function (p) { 
+  var sketch = function (p) {
     p.setup = function () {
       p.createCanvas(window.innerWidth, window.innerHeight);
     };
@@ -71,7 +71,7 @@ p5.jsの関数名にいちいち`p.`と入れないといけないのが少し�
   'use strict';
   var content, scripts,index;
   scripts = [ "gol.js", "circle.js" ];
-  
+
   index = Math.floor(Math.random() * scripts.length);
 
   content = document.createElement('script');

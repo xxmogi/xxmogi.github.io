@@ -9,19 +9,18 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
       <ul class="nav navbar-nav navbar-left">
+
         <li><a href="{{ site.baseurl }}/blog/">Blog</a></li>
         <li><a href="{{ site.baseurl }}/develop/">Develop</a></li>
         {% for page in site.pages %}
         {% if page.title %}
         <li><a href="{{ page.url | prepend: site.baseurl }}"> {{ page.title }}</a></li>
-        {% endif %} 
+        {% endif %}
         {% endfor %}
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ "/feed.xml" | prepend: site.baseurl }}">RSS</a></li>
       </ul>
+
     </div>
     <!-- /.navbar-collapse -->
   </nav>
 </header>
-

@@ -9,7 +9,15 @@ layout: default
         <h4>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h4>
+        <span class="fui-calendar"></span>
         <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <br>
+
+        <span class="fui-tag">
+        {% for tag in post.tags %}
+        <span class="label label-default">{{ tag }}</span>
+        {% endfor %}
+      </span>
       </header>
       <hr>
       <div>
@@ -17,11 +25,11 @@ layout: default
         <a href="{{ post.url | prepend: site.baseurl }}">
           ...more<span class="fui-arrow-right"></span>
         </a>
-      </div>                               
+      </div>
     </article>
     {% endfor %}
 
-  
+
  {% if paginator.total_pages > 1 %}
 <div class="pagination">
   <ul>
