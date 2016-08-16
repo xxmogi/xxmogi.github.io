@@ -1,0 +1,42 @@
+---
+layout: post
+title: "最近の活動 その1"
+date: "2016-08-16 22:14:22 +0900"
+tags: 保土ヶ谷宿場まつり Web
+---
+
+久々に更新
+
+最近、[保土ヶ谷宿場まつり](http://syukuba.net)の実行委員としてHPの作成に関わっている。関わっていることには特に理由もなく、飲んでるときに誘われて「面白そうだね！」って言って参加。本当に地域密着型になりつつある。
+
+
+それは良しとして、元からあったHP及びインフラを使いながら、かなりこだわって仕組みから作り込んだので、そのことについて複数回に分けて書いていく。
+
+## やったこと
+インフラ周りに関してはさくらの共有サーバを利用。特にページの変更が多いわけでもなく、一部の人間しか更新しないので、HTML直書きの静的ページでいいやという感じ。JavaScriptも全然書いてない。
+
+やったこととしては
+
+* GitHubでバージョン&変更管理
+* [CircleCI](http://circleci.com)で自動デプロイ
+* みんな大好き[Bootstrap](http://getbootstrap.com)
+* 開発、テスト環境は[Node.js](https://nodejs.org/en/)
+* [Swig](https://github.com/paularmstrong/swig)でページレイアウトの共通化
+* CSSはSass化。[cssnext](http://cssnext.io)でベンダープレフィックスも排除。
+* [Bower](https://bower.io)と[wiredep](https://github.com/taptapship/wiredep)でGUIライブラリの管理
+* [imagemin](https://github.com/imagemin/imagemin)で画像圧縮
+* [BrowserSync](https://www.browsersync.io)でLive Reload環境
+* Gulpで色々自動化
+* [OGP](http://ogp.me) (Open Graph Protocol) 対応
+
+結構やってるな…
+
+次回はさくら共有サーバ + GitHub + CircleCIで自動デプロイやった部分についてまとめます。間空く可能性高いけど書きます。
+
+* 稼働中のページ : [http://syukuba.net/2016/syukuba_top.html] (http://syukuba.net/2016/syukuba_top.html)
+* ソースコード類 :  [https://github.com/xxmogi/syukuba](https://github.com/xxmogi/syukuba)
+
+## 宣伝
+保土ヶ谷宿場小町の投票やってますので、よかったら投票してください。引き続きエントリーも募集しています。[宿場小町投票開始](http://syukuba.net/2016/komachi_tohyo.html)
+
+クラウドファンディングもやってます。ぜひ拡散お願いします。[宿場街400年の歴史を未来に引き継ぐ「保土ケ谷宿場まつり」活性化プロジェクト](https://cf.yokohama.localgood.jp/project/hodogayashukuba2016/home)
