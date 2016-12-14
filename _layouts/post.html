@@ -1,24 +1,26 @@
+--- 
+layout: default 
 ---
-layout: default
----
+
 <div class="post">
   <header class="post-header">
     <h2 class="post-title">{{ page.title }}</h2>
     <p class="post-meta">
       <span class="fui-calendar"></span>
-      <span>{{ page.date | date: "%b %-d, %Y" }}</span>
-        {% if page.author %}
-      • {{ page.author }}{% endif %}{% if page.meta %}
-      • {{ page.meta }}{% endif %}<br>
+      <span>{{ page.date | date: "%b %-d, %Y" }}</span> 
+      {% if page.author %}
+       • {{ page.author }}
+       {% endif %}
+       {% if page.meta %} 
+       • {{ page.meta }}
+       {% endif %}<br>
       <span class="fui-tag">
       {% for tag in page.tags %}
-      <span class="label label-default">{{ tag }}</span>
+      <span class="label label-default">{{ tag }}</span> 
       {% endfor %}
-    </span>
+      </span>
     </p>
-
   </header>
-
   <article class="post-content">
     {{ content }}
   </article>
@@ -27,20 +29,21 @@ layout: default
     <span class="pull-left">
       <a href="{{ page.previous.url | prepend: site.baseurl }}">
         <span class="fui-arrow-left"></span>{{page.previous.title}}
-      </a>
+    </a>
     </span>
     {% endif %}
+
     {% if page.next %}
-        <span class="pull-right">
+    <span class="pull-right">
       <a href="{{ page.next.url | prepend: site.baseurl }}">
         {{page.next.title}}<span class="fui-arrow-right"></span>
-      </a>
+    </a>
     </span>
     {% endif %}
     <div class="clearfix"></div>
   </div>
   <div id="disqus_thread"></div>
-<script type="text/javascript">
+  <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = 'wasted-laboratory';
     var disqus_identifier = '{{ page.title }}';
@@ -51,5 +54,5 @@ layout: default
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 </div>

@@ -45,8 +45,8 @@ $spacing-unit:     30px;
 
 
 // Import partials from `sass_dir` (defaults to `_sass`)
-@import
-//        "base",
-//        "layout",
-        "syntax-highlighting"
-;
+
+
+footer {
+        margin-top:30px;
+}
