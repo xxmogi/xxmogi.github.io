@@ -6,17 +6,13 @@ baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://xxmogi.github.io" # the base hostname & protocol for your site
 twitter_username: xxmogi
 github_username:  xxmogi
-paginate: 4
-paginate_path: "/blog/page:num"
+
 # Build settings
-markdown: redcarpet
-highlight: none
+markdown: kramdown
+highlighter: rouge
 safe: true
 lsi: false
 exclude: ['vendor', 'Gemfile', 'Gemfile.lock', '.ruby-version', '.gitignore', '.bundle', '.git', 'LICENSE', 'Flat-UI-master']
 
 gems:
-    - jekyll-mentions
-#    - jemoji
-    - jekyll-redirect-from
-    - jekyll-sitemap
+    - jekyll-paginate

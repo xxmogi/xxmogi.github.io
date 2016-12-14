@@ -3,7 +3,7 @@ layout: default
 ---
 
 <div class="home">
-    {% for post in paginator.posts %}
+    {% for post in site.posts %}
     <article>
       <header>
         <h4>
@@ -28,43 +28,4 @@ layout: default
       </div>
     </article>
     {% endfor %}
-
-
- {% if paginator.total_pages > 1 %}
-<div class="pagination">
-  <ul>
-  {% if paginator.previous_page %}
-    <li class="previous">
-    <a href="{{ paginator.previous_page_path }}" class="fui-arrow-left"></a>
-    </li>
-  {% else %}
-    <li class="previous">
-    <span class="fui-arrow-left"></span>
-    </li>
-  {% endif %}
-
-  {% for page in (1..paginator.total_pages) %}
-    {% if page == paginator.page %}
-    <li class="active"><a>{{ page }}</a></li>
-    {% elsif page == 1 %}
-      <li><a href="{{ '/blog/index.html' | prepend: site.baseurl | prepend: site.pagenate_path }}">{{ page }}</a>
-      </li>
-    {% else %}
-    <li><a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
-    </li>
-    {% endif %}
-  {% endfor %}
-
-  {% if paginator.next_page %}
-    <li class="next">
-      <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="fui-arrow-right"></a>
-    </li>
-  {% else %}
-    <li class="next">
-      <span class="fui-arrow-right"></span>
-    </li>
-  {% endif %}
-  </ul>
-</div>
-{% endif %}
 </div>
