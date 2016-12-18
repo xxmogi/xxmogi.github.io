@@ -1,0 +1,261 @@
+---
+layout: post
+title: "First Impressions Of GO"
+date: "2016-12-19 00:00:00 +0900"
+tags: AdventCalendar Go
+---
+この記事は[dodosoft Advent Calendar 2016](http://www.adventar.org/calendars/1737) 19日目。
+
+# Why Go?
+
+単純に流行ってる感じだったから。
+
+* [Docker](https://github.com/docker/docker), [Kubernetes](https://github.com/kubernetes/kubernetes)で使われている
+* VMwareさんが[結構頑張っている](https://github.com/vmware)
+* ちょっと前に[話題になったBot Net](https://github.com/jgamblin/Mirai-Source-Code)すらGoだった
+
+これはやらねばということでさわりだけやってみました。
+
+# Settings
+
+## Install 
+MacではHomebrewで一発。入ってないなら入れましょう。
+
+```bash
+$ brew install go
+```
+インストールしたらすぐにGOPATHを設定しましょう。GOPATHは後述するパッケージの展開先 and コード
+プロジェクト作る先になるので、アクセスしやすいパスにしよう。自分は下記のように`.bashrc`
+に設定。
+
+```bash
+export GOPATH=$HOME/Developer/go
+```
+
+## Editor
+自分は最近Visual Studio Codeばっかり使ってるのでこれを設定。Goの拡張機能を入れると、
+拡張機能が依存しているGoパッケージのインストールを促されるので、そのままインストール。
+これらのパッケージもGOPATHに展開されます。
+
+拡張機能を入れると、コード補完やセーブ時の自動フォーマット、エラー表示等やってくれるので
+結構快適に開発ができる。
+
+# A Tour of Go
+ここからGoの構文について。基本的には[A Tour of Go](https://go-tour-jp.appspot.com)
+をやっていけば構文は覚えられます。
+
+## Hello World
+おきまりの[Hello World](https://ja.wikipedia.org/wiki/Hello_worldプログラムの一覧)から。
+以下の内容を`main.go`として保存。
+
+```go
+package main
+
+import (
+	"fmt"
+)
+
+func sayHello(message string) (result bool, err error) {
+	fmt.Println(message)
+	result = true
+	err = nil
+	return
+}
+
+func main() {
+	message := "Hello world!"
+	result, _ := sayHello(message)
+	if result {
+		fmt.Println("Awesome!")
+	}
+}
+
+```
+
+### Execute
+`go run main.go`で実行できます。
+packageはmainにしましょう。`go run <file name>` はmain package の main実行します。
+また、`go build main.go` を実行すると、実行可能な単一のファイルが生成されます(この場合は`main`が生成されます)。
+それを実行しても同じ結果が表示されます。クロスも可能っぽいのですが、それはまだ調べてません。
+
+### Function
+```go 
+func sayHello(message string) (result bool, err error) {
+```
+
+関数は`func`で定義します。引数の型、戻り値の型はそれぞれ変数名の後ろに定義します。前につけるか後ろにつけるかは
+もう宗教なので細かいことは言いません。郷に入っては郷に従えです。
+そして特徴的なのが、関数名を大文字で始めると外部パッケージに対してexportされ、
+小文字で始めるとpackage private として扱われます。これはパッケージ内の変数
+に対しても適用されます。
+コーディング規約が言語仕様に組み込まれているので、規約を作る苦労から解放されますね。
+
+素敵!!
+
+### Multi Result
+```go
+result, _ := sayHello(message)
+```
+Goでは返り値を複数定義できます。よく見る使い方だと、結果と`error`を返し `if err != nil`で
+Error Handlingする等の書き方を見ます。`error`が必要ない場合は変数に`_`を指定することで
+その値を無視することができます。
+
+それと、複数返せるからといって、何でもかんでも返すのは設計としてよくない臭いが
+する(おそらくその関数が多くの責任を持ちすぎている)ので、その際は設計を見直しましょう。
+
+そしてHello worldに突っ込みすぎ…
+
+## Struct, Method, Receiver
+Goにはクラスの概念がありません。その代わり、`Struct`と `Methods`, `Receiver` を使ってクラスに
+近い概念を実装できます。
+
+```go 
+package main
+
+import "fmt"
+
+type Rect struct {
+	width  float32
+	height float32
+}
+
+func (r Rect) Area() float32 {
+	return r.width * r.height
+}
+
+func (r *Rect) Resize(scale float32) {
+	r.height = r.height * scale
+	r.width = r.width * scale
+}
+
+func NewRect(width float32, height float32) *Rect {
+	rect := new(Rect)
+	rect.width = width
+	rect.height = height
+	return rect
+}
+
+func main() {
+	rect := NewRect(20, 20)
+	fmt.Println(rect.Area())
+	rect.Resize(0.5)
+	fmt.Println(rect.Area())
+}
+
+```
+
+四角形を表すStructの`Rect`と、その面積を返すMethod `Area()`,`Resize(scale float32)`を定義しました。`(r Rect)`がReceiverです。Receiverに
+指定したStructに対してこのMethodが利用可能になります。C#で言うところのExtensionsに似ているので自分的に結構好みです。
+
+```go 
+func (r Rect) Area() float32 
+```
+この`(r Rect)`は、オブジェクトのコピーを渡すので、Rectの内容を書き換えることはできません。
+このように書くことは副作用を抑えることができるため、シンプルなコードが書けるという利点があると思います。
+また、`Struct`に対して操作を行いたい時は`Resize`にある`(r *Rect)`と書くことで参照渡しにすることもできます。
+
+```go
+func (r *Rect) Resize(scale float32)
+```
+
+`Struct`の初期化に関しては様々な流派がありますが、`NewRect`のようにFactory関数を作ることが多いようなので、
+それに習って書いています。
+
+```go
+func NewRect(width float32, height float32) *Rect {
+	rect := new(Rect)
+	rect.width = width
+	rect.height = height
+	return rect
+}
+```
+
+## Interface
+
+GoではInterfaceも定義されているため、ポリモーフィズムも表現できます。
+
+```go
+type Resizable interface {
+	Resize(scale float32)
+}
+
+func ResizeDiaglam(d Resizable, scale float32) {
+	d.Resize(scale)
+}
+
+func main() {
+	r := NewRect(20,20)
+	fmt.Println(r.Area())
+	ResizeDiaglam(r, 0.5)
+	fmt.Println(r.Area())
+}
+```
+`Interface`の実装は明示的に指定しなくても、その`Struct`に`Methods`が定義されていれば`Interface`を実装
+していると判断してくれます。
+
+この例で`Rect`はすでに`Resize()`を定義してあるので、`Resizable`を実装していることになり、`ResizeDiaglam()`
+で`Resizable`として受け取ることができています。
+
+`Interface`に関してもいろいろと実装に関するパターンがあるみたいですが、ここでは省略します。
+
+
+## goroutine
+Go言語の最も特徴的なものが`gorutine`による並列実行でしょう。関数を呼び出す際に`go`というキーワードを
+指定するだけで、並列に処理されるようになります。
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func say(ch chan bool) {
+	time.Sleep(time.Second)
+	fmt.Println("world")
+	ch <- true
+}
+
+func main() {
+	ch := make(chan bool)
+	go say(ch)
+	fmt.Println("hello")
+	fmt.Println(<-ch)
+}
+```
+
+###Channel
+`goroutine`による並列処理は Message-passingというモデルになっています。これは、Worker間のデータの
+やり取りをメッセージのやり取りによって実現するとモデルです。GoではChannelというものを使ってメッセージをやり取り
+します。
+
+```go
+	ch := make(chan bool)
+	go say(ch)
+```
+
+`make(chan bool)`で`bool`型のChannelを作成し、それを`goroutine`で実行される`say`という関数に
+渡しています。`goroutine`で実行された`say`関数は`main`とは別のWorkerで実行されるので、後続の
+処理が引き続き実行されます。
+
+Channelへのデータ送信は`ch <- true`, データの受信は`<- ch`で行います。データの受信は、その時点で
+ブロックされるので、`fmt.Println(<-ch)`では`say`が終了するまで待ってから実行されます。
+
+
+# Summary
+ざっとGoの環境構築から言語仕様までやってみました。
+
+感想としては、
+* 必要なものが言語というか環境に取り込まれている。(style checkやクロスコンパイルなど)
+* シンプルに書ける。と言うかシンプルに書くことを強要される。
+* C言語でのモジュール化の書き方に似ているような感じ。(Structを使うなど)
+
+といったもの。自分としてはかなり好みです。
+
+ただ、まだまだデファクトが出来上がっていない部分も多く、エンタープライズ向けなんかは気をつけて
+使わないといけないなと感じた。
+
+
+明日も私の記事です。今回のとは全く毛色が違う、DNSやDHCP周りの話を書きます。
+
