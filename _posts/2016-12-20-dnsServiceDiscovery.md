@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Dns Service Discovery"
+title: "DNS Service Discovery"
 date: "2016-12-20 20:00:00 +0900"
 tags: AdventCalendar DNS Docker
 ---
@@ -81,6 +81,13 @@ Zoneファイルを変更させる仕組みです。
 
 # Summary
 かなり省略して書きましたが、ここまでやった感想としてDNS, DHCP周りはやれることってたくさんあるんだなと
-感じました。ただ、これらの設定は結局設定ファイルの書き換えなので、Software Definedな世界にはまだまだ
-だなという印象。
-* 
+感じました。ただ現在デファクトの[DHCPD](https://www.isc.org/downloads/dhcp/), 
+[BIND](https://www.isc.org/downloads/bind/)でやりましたが、
+これらの設定は結局設定ファイルの書き換えなので、
+Software Definedな世界にはまだまだだなという印象でした。
+
+最近では、DHCPだと[Kea](http://kea.isc.org/wiki)というものが出てきたりしてます。KeaにはAPIがついていたり、
+拡張用のSDKがついている、BackendにMySQLやPostgreSQLといったDBMSが使えるなど、可能性は広がっています。
+
+Software Defined Infrastructureな世界になってくると、意外とこういった機能をプログラマブルにする必要
+も出てきたりするので、引き続き動向は追いかけておきたいですね。
